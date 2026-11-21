@@ -1,12 +1,19 @@
 {
   "domain": "dolby_dss220",
   "name": "Dolby DSS220",
-  "codeowners": ["@Videobarista"],
+  "categories": [
+    "media_entertainment"
+  ],
+  "codeowners": [
+    "@Videobarista"
+  ],
   "config_flow": true,
   "documentation": "https://github.com/Videobarista/dolby-dss220-ha",
   "integration_type": "device",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/Videobarista/dolby-dss220-ha/issues",
-  "requirements": ["defusedxml==0.7.1"],
-  "version": "0.1.0"
+  "requirements": [
+    "defusedxml>=0.7.1"
+  ],
+  "version": "0.1.1"
 }

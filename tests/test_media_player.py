@@ -90,7 +90,7 @@ async def test_playing_state(
         ("SELECTING", "buffering"),
         ("STOPPED", "idle"),
         ("UNSELECTED", "idle"),
-        ("UNAVAILABLE", "standby"),
+        ("UNAVAILABLE", "idle"),
         ("SOMETHING_NEW", "on"),
     ],
 )

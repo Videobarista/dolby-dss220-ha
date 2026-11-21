@@ -202,7 +202,7 @@ async def test_position_timestamp_kept_while_stopped(
 async def test_options_update_applies_without_reload(
     hass: HomeAssistant, mock_client: MagicMock, read_only_config_entry: MockConfigEntry
 ) -> None:
-    """Switching control on in the options shows the controls at once."""
+    """Switching control on in the options shows the controls at the next poll."""
     await setup_entry(hass, read_only_config_entry)
     player = entity_id(hass, "media_player", "media_player")
     assert hass.states.get(player).attributes.get("supported_features", 0) == 0
@@ -210,7 +210,7 @@ async def test_options_update_applies_without_reload(
     hass.config_entries.async_update_entry(
         read_only_config_entry, options={CONF_ALLOW_CONTROL: True}
     )
-    await hass.async_block_till_done()
+    await poll(hass)
     assert hass.states.get(player).attributes["supported_features"] != 0
     assert read_only_config_entry.state is ConfigEntryState.LOADED
 

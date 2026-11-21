@@ -20,8 +20,8 @@ rules:
   dependency-transparency:
     status: done
     comment: >-
-      One requirement, defusedxml (pinned), to parse SOAP responses safely. The
-      SOAP client itself is part of the integration.
+      One requirement, defusedxml, to parse SOAP responses safely; Home Assistant
+      ships it itself. The SOAP client is part of the integration.
   docs-actions:
     status: exempt
     comment: The integration registers no service actions of its own.

@@ -34,7 +34,8 @@ STATE_MAP: dict[str, MediaPlayerState] = {
     "STOPPED": MediaPlayerState.IDLE,
     "UNSELECTED": MediaPlayerState.IDLE,
     # The server is up, but the media block cannot play (e.g. switched off).
-    "UNAVAILABLE": MediaPlayerState.STANDBY,
+    # The transport state sensor and attribute tell the two idle cases apart.
+    "UNAVAILABLE": MediaPlayerState.IDLE,
 }
 
 CONTROL_FEATURES = (

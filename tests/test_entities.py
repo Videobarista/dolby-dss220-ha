@@ -9,13 +9,10 @@ from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.dolby_dss220.sensor import remaining, timecode
 from custom_components.dolby_dss220.soap import DSSFaultError, PlaybackState
-from homeassistant.components.select.const import (
-    ATTR_OPTION,
-    DOMAIN as SELECT_DOMAIN,
-    SERVICE_SELECT_OPTION,
-)
 from homeassistant.const import (
     ATTR_ENTITY_ID,
+    ATTR_OPTION,
+    SERVICE_SELECT_OPTION,
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
     STATE_OFF,
@@ -42,7 +39,7 @@ async def test_input_select(
     assert current.attributes["options"] == ["server", "hdmi_1", "hdmi_2"]
 
     await hass.services.async_call(
-        SELECT_DOMAIN,
+        Platform.SELECT,
         SERVICE_SELECT_OPTION,
         {ATTR_ENTITY_ID: select, ATTR_OPTION: "hdmi_1"},
         blocking=True,
@@ -79,7 +76,7 @@ async def test_schedule_mode_select(
     assert hass.states.get(select).state == "manual"
 
     await hass.services.async_call(
-        SELECT_DOMAIN,
+        Platform.SELECT,
         SERVICE_SELECT_OPTION,
         {ATTR_ENTITY_ID: select, ATTR_OPTION: "full_automatic"},
         blocking=True,
@@ -139,7 +136,7 @@ async def test_select_read_only(
     await setup_entry(hass, read_only_config_entry)
     with pytest.raises(ServiceValidationError):
         await hass.services.async_call(
-            SELECT_DOMAIN,
+            Platform.SELECT,
             SERVICE_SELECT_OPTION,
             {ATTR_ENTITY_ID: entity_id(hass, "select", "input"), ATTR_OPTION: "hdmi_2"},
             blocking=True,

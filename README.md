@@ -50,7 +50,7 @@ content is left out.
 | Paused | paused |
 | Selecting, seeking, recovering, late | buffering |
 | Ready, stopped, unselected | idle |
-| Unavailable (media block not ready) | standby |
+| Unavailable (media block not ready) | idle (the transport state sensor shows `unavailable`) |
 | Server does not answer | off |
 
 ### Control is opt-in

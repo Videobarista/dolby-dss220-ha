@@ -35,18 +35,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: DSSConfigEntry) -> bool:
     # An unreachable server does not fail the setup: it is shown as offline.
     await coordinator.async_config_entry_first_refresh()
     entry.runtime_data = coordinator
-    entry.async_on_unload(entry.add_update_listener(_async_options_updated))
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
-
-
-async def _async_options_updated(hass: HomeAssistant, entry: DSSConfigEntry) -> None:
-    """Apply changed options without reloading.
-
-    "Allow control" is read on every command; the entities only need to show
-    the new set of supported features.
-    """
-    entry.runtime_data.async_update_listeners()
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: DSSConfigEntry) -> bool:
