@@ -1,11 +1,13 @@
 # Dolby DSS220 for Home Assistant
 
-[![Release](https://img.shields.io/github/v/release/Videobarista/dolby-dss220-ha)](https://github.com/Videobarista/dolby-dss220-ha/releases)
+[![Release](https://img.shields.io/github/v/release/Videobarista/dolby-dss220-ha?sort=semver)](https://github.com/Videobarista/dolby-dss220-ha/releases)
 [![Ruff](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/ruff.yml/badge.svg?branch=main)](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/ruff.yml)
 [![hassfest](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/hassfest.yml/badge.svg?branch=main)](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/hassfest.yml)
 [![HACS](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/hacs.yml/badge.svg?branch=main)](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/hacs.yml)
 [![CodeQL](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/codeql.yml)
 [![Tests](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/tests.yml)
+[![Local only](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/local-only.yml/badge.svg?branch=main)](https://github.com/Videobarista/dolby-dss220-ha/actions/workflows/local-only.yml)
+[![IoT class](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FVideobarista%2Fdolby-dss220-ha%2Fmain%2Fcustom_components%2Fdolby_dss220%2Fmanifest.json&query=%24.iot_class&label=IoT%20class&color=41BDF5)](#local-only)
 [![Quality scale: Bronze (aligned)](https://img.shields.io/badge/quality%20scale-bronze%20(aligned)-cd7f32.svg)](https://developers.home-assistant.io/docs/core/integration-quality-scale/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -169,6 +171,26 @@ What the integration does on its side:
 
 See [SECURITY.md](SECURITY.md) for reporting a vulnerability.
 
+### Local only
+
+The integration only talks to your server, never to the internet or any other service. Two
+automated checks back the **Local only** badge:
+
+- `scripts/check_local_only.py` (the badge's workflow) reads the manifest and the code: local IoT
+  class, no cloud or webhook, no Python packages other than `defusedxml` (an XML parser without
+  network code), no listeners or webhooks, connections only from `api.py`, and no hard-coded
+  internet addresses. The only URLs in the code are the XML namespace names of the SOAP messages,
+  which are identifiers and never contacted. Every address comes from your configuration.
+- The tests run the real client against an in-memory HTTP session through setup, polling and a
+  command, and check that every request goes to the SMI web services of the configured server.
+  Real network access is blocked in the tests, so anything else would fail.
+
+The **IoT class** badge shows the class declared in the manifest (`local_polling`: the integration
+asks the server for its state over the local network).
+
+This covers the integration itself; what Home Assistant does (for example its optional analytics)
+is up to your Home Assistant settings.
+
 ## Quality scale
 
 This integration is aligned with the **Bronze** tier of the
@@ -193,6 +215,9 @@ source .venv/bin/activate
 pip install -r requirements_test.txt
 pytest
 ```
+
+`python3 scripts/check_local_only.py` runs the local-only check on its own (standard library
+only, nothing to install).
 
 `tests/fixtures/` holds SOAP answers in the format of the server. `get_input_select.xml` was
 captured from a DSS220 with a CAT745; the others follow the server's published schemas.
