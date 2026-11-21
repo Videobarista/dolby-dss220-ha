@@ -1,0 +1,64 @@
+{
+  "entity": {
+    "select": {
+      "input": {
+        "default": "mdi:video-input-hdmi",
+        "state": {
+          "server": "mdi:server"
+        }
+      },
+      "schedule_mode": {
+        "default": "mdi:calendar-clock"
+      }
+    },
+    "switch": {
+      "douser": {
+        "default": "mdi:window-shutter",
+        "state": {
+          "off": "mdi:window-shutter-open"
+        }
+      },
+      "lamp": {
+        "default": "mdi:projector",
+        "state": {
+          "off": "mdi:projector-off"
+        }
+      }
+    },
+    "sensor": {
+      "transport_state": {
+        "default": "mdi:play-pause"
+      },
+      "current_show": {
+        "default": "mdi:playlist-play"
+      },
+      "current_clip": {
+        "default": "mdi:filmstrip"
+      },
+      "clip_timecode": {
+        "default": "mdi:timer-outline"
+      },
+      "clip_remaining": {
+        "default": "mdi:timer-sand"
+      },
+      "show_timecode": {
+        "default": "mdi:timer-outline"
+      },
+      "show_remaining": {
+        "default": "mdi:timer-sand"
+      },
+      "alarms": {
+        "default": "mdi:alert-outline"
+      },
+      "clock_offset": {
+        "default": "mdi:clock-alert-outline"
+      },
+      "response_time": {
+        "default": "mdi:timer-outline"
+      },
+      "last_seen": {
+        "default": "mdi:clock-check-outline"
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+<env:Envelope xmlns:env='http://schemas.xmlsoap.org/soap/envelope/'><env:Header></env:Header><env:Body><ns5:getSystemTimeResponse xmlns:ns5="http://www.dolby.com/dcinema/ws/smi/v1_0"><time>2026-11-21T22:48:27.123Z</time><timeZoneId>WET</timeZoneId></ns5:getSystemTimeResponse></env:Body></env:Envelope>

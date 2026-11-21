@@ -1,0 +1,50 @@
+# Status against the Home Assistant integration quality scale.
+# https://developers.home-assistant.io/docs/core/integration-quality-scale/
+#
+# Custom integrations are not graded by Home Assistant; this file records how the
+# integration aligns with the Bronze tier. Higher tiers are not claimed.
+rules:
+  # Bronze
+  action-setup:
+    status: exempt
+    comment: The integration registers no service actions of its own.
+  appropriate-polling:
+    status: done
+    comment: >-
+      Transport state and input every 5 seconds, volume, douser and lamp every
+      30 seconds, the show list, clock and alarms every 5 minutes.
+  brands: done
+  common-modules: done
+  config-flow-test-coverage: done
+  config-flow: done
+  dependency-transparency:
+    status: done
+    comment: >-
+      One requirement, defusedxml (pinned), to parse SOAP responses safely. The
+      SOAP client itself is part of the integration.
+  docs-actions:
+    status: exempt
+    comment: The integration registers no service actions of its own.
+  docs-conditions:
+    status: exempt
+    comment: The integration provides no conditions.
+  docs-high-level-description: done
+  docs-installation-instructions: done
+  docs-removal-instructions: done
+  docs-triggers:
+    status: exempt
+    comment: The integration provides no triggers.
+  entity-event-setup:
+    status: exempt
+    comment: Entities do not subscribe to events; they read coordinator data.
+  entity-unique-id: done
+  has-entity-name: done
+  runtime-data: done
+  test-before-configure: done
+  test-before-setup:
+    status: exempt
+    comment: >-
+      A cinema server switched off for the night is a normal state. An
+      unreachable server is set up anyway and shown as off; it comes back on
+      its own when the server answers again.
+  unique-config-entry: done

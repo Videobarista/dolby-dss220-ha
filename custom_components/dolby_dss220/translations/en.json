@@ -1,0 +1,145 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Dolby DSS220",
+        "description": "Connect to the SMI web services of a Dolby DSS200/DSS220 server. The web services listen on the management network; on a server without a theatre network, set \"Management network\" to Auditorium in the Config script.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "allow_control": "Allow control"
+        },
+        "data_description": {
+          "host": "IP address or host name of the server, for example 192.168.1.129.",
+          "port": "Port of the SMI web services (default 8080).",
+          "allow_control": "Allow Home Assistant to change playback, input, volume, douser and lamp. When off, the integration only reads the state."
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure Dolby DSS220",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        },
+        "data_description": {
+          "host": "IP address or host name of the server.",
+          "port": "Port of the SMI web services (default 8080)."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to the server. Check the address, port and network (VLAN, gateway and the management network setting of the server).",
+      "invalid_host": "Enter a valid IP address or host name, without http:// or a path.",
+      "invalid_response": "The server answered, but not like a Dolby DSS SMI web service.",
+      "unknown": "Unexpected error, see the log for details."
+    },
+    "abort": {
+      "already_configured": "This server is already configured.",
+      "reconfigure_successful": "The configuration was updated.",
+      "wrong_device": "This address belongs to a different server."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Dolby DSS220 options",
+        "data": {
+          "allow_control": "Allow control"
+        },
+        "data_description": {
+          "allow_control": "Allow Home Assistant to change playback, input, volume, douser and lamp. When off, the integration only reads the state."
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "input": {
+        "name": "Input",
+        "state": {
+          "server": "Server",
+          "hdmi_1": "HDMI 1",
+          "hdmi_2": "HDMI 2",
+          "hd_sdi": "HD-SDI"
+        }
+      },
+      "schedule_mode": {
+        "name": "Schedule mode",
+        "state": {
+          "full_automatic": "Full automatic",
+          "select_automatic": "Select automatic",
+          "manual": "Manual"
+        }
+      }
+    },
+    "switch": {
+      "douser": {
+        "name": "Douser closed"
+      },
+      "lamp": {
+        "name": "Lamp"
+      }
+    },
+    "sensor": {
+      "transport_state": {
+        "name": "Transport state",
+        "state": {
+          "ready": "Ready",
+          "selecting": "Selecting",
+          "recovering": "Recovering",
+          "late": "Late",
+          "playing": "Playing",
+          "stopped": "Stopped",
+          "paused": "Paused",
+          "unselected": "Unselected",
+          "seeking": "Seeking",
+          "unavailable": "Unavailable"
+        }
+      },
+      "current_show": {
+        "name": "Current show"
+      },
+      "current_clip": {
+        "name": "Current clip"
+      },
+      "clip_timecode": {
+        "name": "Clip timecode"
+      },
+      "clip_remaining": {
+        "name": "Clip remaining"
+      },
+      "show_timecode": {
+        "name": "Show timecode"
+      },
+      "show_remaining": {
+        "name": "Show remaining"
+      },
+      "alarms": {
+        "name": "Active alarms"
+      },
+      "clock_offset": {
+        "name": "Clock offset"
+      },
+      "response_time": {
+        "name": "Response time"
+      },
+      "last_seen": {
+        "name": "Last seen"
+      }
+    }
+  },
+  "exceptions": {
+    "control_disabled": {
+      "message": "Control is disabled for this Dolby DSS220. Enable \"Allow control\" in the integration options."
+    },
+    "command_failed": {
+      "message": "The Dolby DSS220 did not accept the command: {error}"
+    },
+    "invalid_value": {
+      "message": "Invalid value: {error}"
+    },
+    "unknown_source": {
+      "message": "Unknown show: {source}"
+    }
+  }
+}

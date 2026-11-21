@@ -1,0 +1,5 @@
+# Test dependencies. The plugin pins the Home Assistant release the tests run against.
+pytest-homeassistant-custom-component==0.13.375
+# Requirement of the integration itself (manifest.json); Home Assistant does not install
+# requirements while testing.
+defusedxml==0.7.1

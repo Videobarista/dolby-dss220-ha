@@ -1,0 +1,145 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Dolby DSS220",
+        "description": "Verbind met de SMI-webservices van een Dolby DSS200/DSS220-server. De webservices luisteren op het managementnetwerk; zet bij een server zonder theatre-netwerk \"Management network\" op Auditorium in het Config-script.",
+        "data": {
+          "host": "Host",
+          "port": "Poort",
+          "allow_control": "Bediening toestaan"
+        },
+        "data_description": {
+          "host": "IP-adres of hostnaam van de server, bijvoorbeeld 192.168.1.129.",
+          "port": "Poort van de SMI-webservices (standaard 8080).",
+          "allow_control": "Laat Home Assistant afspelen, input, volume, douser en lamp bedienen. Uit: de integratie leest alleen de status."
+        }
+      },
+      "reconfigure": {
+        "title": "Dolby DSS220 opnieuw configureren",
+        "data": {
+          "host": "Host",
+          "port": "Poort"
+        },
+        "data_description": {
+          "host": "IP-adres of hostnaam van de server.",
+          "port": "Poort van de SMI-webservices (standaard 8080)."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan geen verbinding maken met de server. Controleer adres, poort en netwerk (VLAN, gateway en de management-netwerkinstelling van de server).",
+      "invalid_host": "Vul een geldig IP-adres of een hostnaam in, zonder http:// of pad.",
+      "invalid_response": "De server antwoordt, maar niet als een Dolby DSS SMI-webservice.",
+      "unknown": "Onverwachte fout, zie het logboek."
+    },
+    "abort": {
+      "already_configured": "Deze server is al geconfigureerd.",
+      "reconfigure_successful": "De configuratie is bijgewerkt.",
+      "wrong_device": "Dit adres hoort bij een andere server."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Dolby DSS220-opties",
+        "data": {
+          "allow_control": "Bediening toestaan"
+        },
+        "data_description": {
+          "allow_control": "Laat Home Assistant afspelen, input, volume, douser en lamp bedienen. Uit: de integratie leest alleen de status."
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "input": {
+        "name": "Input",
+        "state": {
+          "server": "Server",
+          "hdmi_1": "HDMI 1",
+          "hdmi_2": "HDMI 2",
+          "hd_sdi": "HD-SDI"
+        }
+      },
+      "schedule_mode": {
+        "name": "Schedulemodus",
+        "state": {
+          "full_automatic": "Volledig automatisch",
+          "select_automatic": "Automatisch selecteren",
+          "manual": "Handmatig"
+        }
+      }
+    },
+    "switch": {
+      "douser": {
+        "name": "Douser dicht"
+      },
+      "lamp": {
+        "name": "Lamp"
+      }
+    },
+    "sensor": {
+      "transport_state": {
+        "name": "Transportstatus",
+        "state": {
+          "ready": "Gereed",
+          "selecting": "Selecteren",
+          "recovering": "Herstellen",
+          "late": "Te laat",
+          "playing": "Speelt af",
+          "stopped": "Gestopt",
+          "paused": "Gepauzeerd",
+          "unselected": "Niets geselecteerd",
+          "seeking": "Zoeken",
+          "unavailable": "Niet beschikbaar"
+        }
+      },
+      "current_show": {
+        "name": "Huidige show"
+      },
+      "current_clip": {
+        "name": "Huidige clip"
+      },
+      "clip_timecode": {
+        "name": "Tijdcode clip"
+      },
+      "clip_remaining": {
+        "name": "Resterend clip"
+      },
+      "show_timecode": {
+        "name": "Tijdcode show"
+      },
+      "show_remaining": {
+        "name": "Resterend show"
+      },
+      "alarms": {
+        "name": "Actieve alarmen"
+      },
+      "clock_offset": {
+        "name": "Klokafwijking"
+      },
+      "response_time": {
+        "name": "Reactietijd"
+      },
+      "last_seen": {
+        "name": "Laatst gezien"
+      }
+    }
+  },
+  "exceptions": {
+    "control_disabled": {
+      "message": "Bediening staat uit voor deze Dolby DSS220. Zet \"Bediening toestaan\" aan in de opties van de integratie."
+    },
+    "command_failed": {
+      "message": "De Dolby DSS220 accepteerde het commando niet: {error}"
+    },
+    "invalid_value": {
+      "message": "Ongeldige waarde: {error}"
+    },
+    "unknown_source": {
+      "message": "Onbekende show: {source}"
+    }
+  }
+}
