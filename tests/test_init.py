@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import timedelta
 from unittest.mock import MagicMock
 
@@ -16,7 +17,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.util import dt as dt_util
 
-from .const import CLIP_ID, SHOW3_ID, SW_VERSION, UNIQUE_ID
+from .const import CLIP_ID, SERVER, SHOW3_ID, SW_VERSION, UNIQUE_ID
 
 
 def entity_id(hass: HomeAssistant, platform: str, key: str) -> str:
@@ -53,8 +54,10 @@ async def test_setup_and_unload(
     await setup_entry(hass, mock_config_entry)
     assert mock_config_entry.state is ConfigEntryState.LOADED
 
-    device = dr.async_get(hass).async_get_device(identifiers={(DOMAIN, UNIQUE_ID)})
-    assert device is not None
+    devices = dr.async_entries_for_config_entry(dr.async_get(hass), mock_config_entry.entry_id)
+    assert len(devices) == 1
+    device = devices[0]
+    assert (DOMAIN, UNIQUE_ID) in device.identifiers
     assert device.manufacturer == "Dolby"
     assert device.model == "DSS220"
     assert device.sw_version == SW_VERSION
@@ -65,6 +68,20 @@ async def test_setup_and_unload(
     assert await hass.config_entries.async_unload(mock_config_entry.entry_id)
     await hass.async_block_till_done()
     assert mock_config_entry.state is ConfigEntryState.NOT_LOADED
+
+
+async def test_software_version_follows_server(
+    hass: HomeAssistant, mock_client: MagicMock, mock_config_entry: MockConfigEntry
+) -> None:
+    """A newer software version reported by the server ends up on the device."""
+    mock_client.get_device_components.return_value = [replace(SERVER, version="4.9.6.1")]
+    await setup_entry(hass, mock_config_entry)
+
+    await mock_config_entry.runtime_data.async_request_full_refresh()
+    await hass.async_block_till_done()
+
+    devices = dr.async_entries_for_config_entry(dr.async_get(hass), mock_config_entry.entry_id)
+    assert devices[0].sw_version == "4.9.6.1"
 
 
 async def test_setup_while_offline(

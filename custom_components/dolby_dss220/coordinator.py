@@ -288,16 +288,28 @@ class DSSCoordinator(DataUpdateCoordinator[DSSData]):
         self._components = tuple(components)
         self._alarms = tuple(alarm for component in components for alarm in component.alarms)
         server = find_server_component(components)
-        if server is not None and server.version and server.version != self._sw_version:
+        if (
+            server is not None
+            and server.version
+            and server.version != self._sw_version
+            and self._update_device_version(server.version)
+        ):
             self._sw_version = server.version
-            self._update_device_version(server.version)
 
-    def _update_device_version(self, version: str) -> None:
-        """Store the reported software version in the device registry."""
+    def _update_device_version(self, version: str) -> bool:
+        """Store the reported software version in the device registry.
+
+        Returns False while the device is not registered yet (the first poll runs
+        before the entities create it), so the next slow poll tries again.
+        """
         registry = dr.async_get(self.hass)
-        device = registry.async_get_device(identifiers={(DOMAIN, self.device_identifier)})
-        if device is not None and device.sw_version != version:
-            registry.async_update_device(device.id, sw_version=version)
+        identifier = (DOMAIN, self.device_identifier)
+        for device in dr.async_entries_for_config_entry(registry, self.config_entry.entry_id):
+            if identifier in device.identifiers:
+                if device.sw_version != version:
+                    registry.async_update_device(device.id, sw_version=version)
+                return True
+        return False
 
     async def _async_clip_name(self, playback: PlaybackState | None) -> str | None:
         """Return the name of the clip that is currently playing."""
